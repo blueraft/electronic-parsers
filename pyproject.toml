@@ -1,64 +1,24 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = 'electronicparsers'
-version = '1.1'
-description = 'Collection of NOMAD parsers for electronic structure codes.'
+[tool.poetry]
+name = "electronicparsers"
+version = "0.1.0"
+description = ""
+authors = ["Ahmed Ilyas <ahmed.n.ilyas@gmail.com>"]
 readme = "README.md"
-authors = [{ name = "The NOMAD Authors" }]
-license = { file = "LICENSE" }
-dependencies = [
-    "nomad-lab[infrastructure]@git+https://github.com/nomad-coe/nomad.git@develop",
-    "nomad-schema-plugin-simulation-workflow@git+https://github.com/nomad-coe/nomad-schema-plugin-simulation-workflow.git@c78ff7349cff4be4a8f8c50d74c72e9c1b1152ab",
-    "lxml==4.7.1",
-    "pyscf==2.0.1; sys_platform == 'darwin'",
-    "netCDF4==1.5.4",
-    "h5py>=3.6.0",
-    "pyyaml==6.0",
-]
+packages = [{include = "electronicparsers"}]
+include = ["*.yaml"]
 
-[project.urls]
-homepage = "https://github.com/nomad-coe/electronic-parsers"
+[tool.poetry.dependencies]
+python = "^3.9"
+nomad-lab= {git = "https://github.com/nomad-coe/nomad.git", branch = "develop", extras = ["infrastructure"]}
+nomad-schema-plugin-simulation-workflow = {git = "https://github.com/nomad-coe/nomad-schema-plugin-simulation-workflow.git", rev = "c78ff7349cff4be4a8f8c50d74c72e9c1b1152ab"}
+# Other dependencies
+lxml = "4.7.1"
+pyscf = {version = "2.0.1", markers = "sys_platform == 'darwin'"}
+netCDF4 = "1.5.4"
+h5py = "^3.6.0"
+pyyaml = "6.0"
 
-[project.optional-dependencies]
-dev = [
-    'mypy==1.0.1',
-    'pytest==3.10.0',
-    'pytest-timeout==1.4.2',
-    'pytest-cov==2.7.1',
-    'astroid==2.11.7',
-    'typing-extensions==4.4.0',
-    'ruff==0.1.4'
-]
 
-[tool.ruff]
-include = ["electronicparsers/*.py", "tests/*.py"]
-select = [
-    "E", # pycodestyle
-    "W", # pycodestyle
-    "PL", # pylint
-]
-ignore = [
-    "E501", # Line too long ({width} > {limit} characters)
-    "E701", # Multiple statements on one line (colon)
-    "E731", # Do not assign a lambda expression, use a def
-    "E402",  # Module level import not at top of file
-    "PLR0911", # Too many return statements
-    "PLR0912", # Too many branches
-    "PLR0913", # Too many arguments in function definition
-    "PLR0915", # Too many statements
-    "PLR2004", # Magic value used instead of constant
-    "PLW0603", # Using the global statement
-    "PLW2901", # redefined-loop-name
-    "PLR1714", # consider-using-in
-    "PLR5501", # else-if-used
-]
-fixable = ["ALL"]
-
-[tool.setuptools.packages.find]
-include = ["electronicparsers*"]
-
-[tool.setuptools.package-data]
-electronicparsers = ['*/metadata.yaml', '*/README.md']
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
